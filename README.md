@@ -57,6 +57,11 @@ As it fetches live API, device needs to be online.
  - Material Theme 3
  - Extended Material Icons
  - View Model for Compose
+
+## Steps To Install on your Device
+- Visit the following link 
+- [Install Now](https://webapp.diawi.com/install/oVogu7)
+- Install the Apk Checking Minimum Requirements and Versions. 
  
 
 
