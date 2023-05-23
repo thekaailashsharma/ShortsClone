@@ -126,7 +126,7 @@ fun ShortsUI(
             if (pagerState.currentPage == postId.toInt() +1) {
                 if (postId != null) {
                     println("PostId is $postId & current page is ${pagerState.currentPage}")
-                    pagerState.scrollToPage(postId.toInt() + 1)
+                    pagerState.scrollToPage(0)
 
                 }
             }
