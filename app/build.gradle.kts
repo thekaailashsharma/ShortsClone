@@ -90,15 +90,30 @@ dependencies {
     //Exoplayer
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.ui)
+    implementation(libs.google.exoplayer.core)
+    implementation(libs.google.exoplayer.dash)
+    implementation(libs.google.exoplayer.ui)
+
+    //Material Extended Icons
+    implementation(libs.material.icons.extended)
 
     //Dagger Hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.kapt)
     implementation(libs.dagger.hilt.navigation)
 
+    //Navigation Compose
+    implementation(libs.navigation.compose)
+
+    //MaterialCompose
+    implementation(libs.compose.material)
+
     //Moshi
     implementation(libs.moshi.kotlin)
     kapt(libs.moshi.kotlin.codegen)
+
+    //Pager
+    implementation(libs.pager)
 
 
     //Testing Android

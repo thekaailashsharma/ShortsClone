@@ -15,9 +15,12 @@ navigation-compose = "2.5.3"
 paging = "3.1.1"
 paging-compose = "1.0.0-alpha19"
 dagger = "2.45"
-navigation = "2.53"
+navigation = "2.5.3"
 moshi = "1.14.0"
 exoplayer ="1.1.0-alpha01"
+pager = "0.28.0"
+google-exoplayer = "2.18.7"
+extended-icons = "1.3.1"
 
 [libraries]
 androidx-navigation-compose-2_5_3 = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
@@ -52,6 +55,13 @@ moshi-kotlin = { group = "com.squareup.moshi", name = "moshi", version.ref = "mo
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer"}
+google-exoplayer-core = { group = "com.google.android.exoplayer", name = "exoplayer-core", version.ref = "google-exoplayer"}
+google-exoplayer-dash = { group = "com.google.android.exoplayer", name = "exoplayer-dash", version.ref = "google-exoplayer"}
+google-exoplayer-ui = { group = "com.google.android.exoplayer", name = "exoplayer-ui", version.ref = "google-exoplayer"}
+material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "extended-icons"}
+compose-material = { group = "androidx.compose.material", name = "material", version = "1.3.1" }
+
+pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "pager" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

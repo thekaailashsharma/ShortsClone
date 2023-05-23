@@ -1,5 +1,7 @@
 package task.clone.shorts
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -13,6 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ShortsViewModel @Inject constructor(private val videoRepository: VideoRepository) :
     ViewModel() {
+
+        var isLoading: MutableState<Boolean> = mutableStateOf(false)
+        var pageNumber: MutableState<Int> = mutableStateOf(0)
 
         val usersPage = Pager(
             config = PagingConfig(
