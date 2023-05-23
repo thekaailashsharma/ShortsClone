@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,6 +72,7 @@ import task.clone.shorts.R
 import task.clone.shorts.ShortsViewModel
 import task.clone.shorts.ui.theme.iconColor
 import task.clone.shorts.ui.theme.shortsBackground
+import kotlin.math.abs
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -121,6 +123,7 @@ fun ShortsUI(
         pageCount = shortsList.itemCount, state = pagerState, modifier = Modifier.fillMaxSize()
     ) { page ->
 
+
         LaunchedEffect(shortsViewModel.pageNumber) {
             println("Post id is $postId")
             if (pagerState.currentPage == postId.toInt() +1) {
@@ -160,6 +163,7 @@ fun ShortsUI(
                 Box(modifier = Modifier.fillMaxSize()) {
                     VideoView(
                         videoUri = shortsList[page]?.submission?.mediaUrl ?: "",
+                        pagerState = pagerState,
                         onDoubleClick = {
                             isLiked = true
                             isLikeAnim = true

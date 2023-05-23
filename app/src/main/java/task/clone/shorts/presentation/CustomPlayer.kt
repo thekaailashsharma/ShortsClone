@@ -3,17 +3,23 @@ package task.clone.shorts.presentation
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,16 +28,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,22 +56,27 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
+import androidx.media3.ui.PlayerView.SHOW_BUFFERING_ALWAYS
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.flow.distinctUntilChanged
 import task.clone.shorts.R
 import task.clone.shorts.ShortsViewModel
 import task.clone.shorts.ui.theme.iconColor
 import java.util.concurrent.TimeUnit
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnsafeOptInUsageError")
 @Composable
 fun VideoView(
+    pagerState: PagerState,
     videoUri: String,
     onDoubleClick: () -> Unit,
     shortsViewModel: ShortsViewModel = hiltViewModel()
 ) {
+
 
     val context = LocalContext.current
     val exoPlayer = remember {
@@ -73,7 +87,6 @@ fun VideoView(
                 )
             )
             prepare()
-            playWhenReady = true
             shortsViewModel.isLoading.value = this.isLoading
 
         }
@@ -130,6 +143,7 @@ fun VideoView(
                 onDispose {
                     exoPlayer.removeListener(listener)
                     exoPlayer.release()
+                    exoPlayer.clearMediaItems()
                 }
             }
 
@@ -141,23 +155,28 @@ fun VideoView(
                     }
                     .fillMaxSize()
                     .pointerInput(Unit) {
-                        detectTapGestures(onDoubleTap = {
-                            onDoubleClick()
-                        })
+                        detectTapGestures(
+                            onDoubleTap = {
+                                onDoubleClick()
+                            },
+                            onPress = {
+                                if (!pagerState.isScrollInProgress) {
+                                    exoPlayer.playWhenReady = false
+                                    awaitRelease()
+                                    exoPlayer.playWhenReady = true
+                                }
+                            },
+                        )
                     },
                 factory = {
                     PlayerView(context).apply {
-                        player = exoPlayer
+                        layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                         useController = false
-                        layoutParams =
-                            FrameLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT
-                            )
-                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-
+                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                        player = exoPlayer
+                        setShowBuffering(SHOW_BUFFERING_ALWAYS)
                     }
-                }
+                },
             )
 
             PlayerControls(
