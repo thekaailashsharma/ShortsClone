@@ -8,7 +8,7 @@ It has minimal Application and is Made using Jetpack Compose.
 I bet u will love the UI. ❤️
 
 ## Check Demo Video Here
-- [Click here](https://youtu.be/Aykrdei1CX0)
+- [Click here](https://youtu.be/reI6PgIql1Y)
 
 
 ## Highlight Features
