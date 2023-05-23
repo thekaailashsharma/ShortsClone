@@ -60,7 +60,7 @@ As it fetches live API, device needs to be online.
 
 ## Steps To Install on your Device
 - Visit the following link 
-- [Install Now](https://webapp.diawi.com/install/oVogu7)
+- [Install Now](https://i.diawi.com/kau9Wv)
 - Install the Apk Checking Minimum Requirements and Versions. 
  
 
